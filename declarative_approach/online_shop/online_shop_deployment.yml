@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: online-shop
 spec:
-  replicas: 5
+  replicas: 3
   selector:
     matchLabels:
       app: online-shop
@@ -14,18 +14,13 @@ spec:
     spec:
       containers:
       - name: online-shop
-        image: node:20-alpine
-        command:
-          - sh
-          - -c
-          - |
-            node -e "require('http').createServer((req,res)=>{res.writeHead(200);res.end('online-shop OK from ARM64\n')}).listen(3000)"
+        image: sagarendure/online-shop-frontend:arm64
         ports:
-        - containerPort: 3000
+        - containerPort: 80
         resources:
           requests:
-            memory: "128Mi"
-            cpu: "100m"
+            memory: "64Mi"
+            cpu: "50m"
           limits:
-            memory: "256Mi"
-            cpu: "500m"
+            memory: "128Mi"
+            cpu: "200m"
