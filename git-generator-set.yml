@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: git-generator-set
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - git:
+      repoURL: https://github.com/sagarendure-bit/ArgoCD-all.git
+      revision: main
+      directories:
+      - path: git_generator/*
+  template:
+    metadata:
+      name: 'gitgen-{{.path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/sagarendure-bit/ArgoCD-all.git
+        targetRevision: main
+        path: '{{.path.path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: gitgen-demo
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
