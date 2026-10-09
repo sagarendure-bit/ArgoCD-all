@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
       - name: online-shop
-        image: amitabhdevops/online_shop:latest
+        image: sagarendure/online-shop-frontend:arm64
         ports:
-        - containerPort: 3000
+        - containerPort: 80
         resources:
           requests:
             memory: "128Mi"
