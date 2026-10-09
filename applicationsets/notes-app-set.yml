@@ -4,23 +4,20 @@ metadata:
   name: notes-app-set
   namespace: argocd
 spec:
-  goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
   generators:
-  - git:
-      repoURL: https://github.com/sagarendure-bit/ArgoCD-all.git
-      revision: main
-      directories:
-      - path: applicationsets/notes-app
+  - list:
+      elements:
+      - appName: notes-app
+        path: applicationsets/notes-app
   template:
     metadata:
-      name: notes-app
+      name: '{{appName}}'
     spec:
       project: default
       source:
         repoURL: https://github.com/sagarendure-bit/ArgoCD-all.git
         targetRevision: main
-        path: '{{.path.path}}'
+        path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
         namespace: default
