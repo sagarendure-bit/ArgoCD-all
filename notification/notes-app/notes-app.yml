@@ -12,7 +12,7 @@ spec:
   source:
     repoURL: https://github.com/sagarendure-bit/ArgoCD-all.git
     targetRevision: main
-    path: sagarendure/notes-app        # ← ArgoCD reads this folder
+    path: notification/notes-app
   destination:
     server: https://kubernetes.default.svc
     namespace: notif-demo
