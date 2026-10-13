@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/sagarendure-bit/ArgoCD-all.git
     targetRevision: main
-    path: argo-features/sync-waves
+    path: sync-waves
     directory:
       exclude: 'sync-waves-app.yml'      # don't recursively apply this file
   destination:
