@@ -10,7 +10,6 @@ spec:
     targetRevision: main
     path: ui_approach/nginx      # path of Nginx app in `argocd-demos` repo
   destination:
-    server: https://kubernetes.default.svc 
     server: https://kubernetes.default.svc   
     namespace: default           # Deploys into default namespace
   syncPolicy:

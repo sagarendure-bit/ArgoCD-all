@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postsync-notification
+  namespace: sync-waves-demo
+  annotations:
+    argocd.argoproj.io/hook: PostSync               # ← run after sync succeeds
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded  # ← clean up after success
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: notify
+        image: curlimages/curl:latest
+        command:
+        - sh
+        - -c
+        - |
+          echo "=========================================="
+          echo "PostSync hook running!"
+          echo "All resources are Synced and Healthy."
+          echo "=========================================="
+          echo "Verifying deployment is ready..."
+          curl -s -o /dev/null -w "Service HTTP status: %{http_code}\n" \
+            http://demo-service.sync-waves-demo.svc.cluster.local
+          echo "Done."
+  backoffLimit: 2

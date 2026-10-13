@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sync-waves-demo
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/sagarendure-bit/ArgoCD-all.git
+    targetRevision: main
+    path: argo-features/sync-waves
+    directory:
+      exclude: 'sync-waves-app.yml'      # don't recursively apply this file
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sync-waves-demo
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-config
+  namespace: sync-waves-demo
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"    # ← runs FIRST
+data:
+  MESSAGE: "Hello from the earliest wave"
+  VERSION: "1.0"
