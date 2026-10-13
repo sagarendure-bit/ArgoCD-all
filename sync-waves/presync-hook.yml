@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: presync-check
+  namespace: sync-waves-demo
+  annotations:
+    argocd.argoproj.io/hook: PreSync                 # ← runs before sync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: check
+        image: curlimages/curl:latest
+        command:
+        - sh
+        - -c
+        - |
+          echo "PreSync hook: checking prerequisites..."
+          echo "About to deploy. Ready to proceed."
+  backoffLimit: 1
